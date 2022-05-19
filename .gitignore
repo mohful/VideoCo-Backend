@@ -1,0 +1,7 @@
+*.env
+*.key
+app/docker-compose.yml
+app/Dockerfile
+/.vscode
+*__pycache__
+~

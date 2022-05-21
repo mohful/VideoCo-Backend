@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Response
+from flask import Flask
 from models import db
 import os
 import sys
@@ -11,9 +11,10 @@ CORS(app, resources={r"/*": {"origins": "*"}}, expose_headers =['Content-Disposi
 
 os.environ['ENV_FILE'] = 'environment.env'
 app.config.from_envvar('ENV_FILE')
+
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(app.config.get("MYSQL_USER"), app.config.get("MYSQL_PASSWORD"), 
-app.config.get("MYSQL_ADDRESS"), app.config.get("MYSQL_PORT"),app.config.get("MYSQL_NAME"))
+app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(app.config.get("DB_USER"), app.config.get("DB_PASSWORD"), 
+app.config.get("DB_ADDRESS"), app.config.get("DB_PORT"),app.config.get("DB_NAME"))
 db.init_app(app)
 
 app.register_blueprint(routes.app, url_prefix="")

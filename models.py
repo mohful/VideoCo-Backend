@@ -30,7 +30,7 @@ class Customer(db.Model):
     free_movies = db.Column(db.Integer)
 
     def __repr__(self):
-        return '%r' % self.id
+        return '%s' % self.id
 
     def to_dict(self):
         return {"id": self.id, "name": self.name, "email": self.email, "phone": self.phone, "card_number": self.card_number, "shipping_address": self.shipping_address, 
@@ -47,7 +47,6 @@ class Movies(db.Model):
     def __repr__(self):
         return '%r' % self.id
     
-    # TODO
     def to_dict(self):
         return {"id": self.id, "name": self.name, "description": self.description, "date_of_release": self.date_of_release, "movie_count": self.movie_count, "price": self.price}
 
@@ -61,7 +60,6 @@ class Persons(db.Model):
     def __repr__(self):
         return '%r' % self.id
 
-    #TODO
     def to_dict(self):
         return {"id": self.id, "first_name": self.first_name, "last_name": self.last_name, "type": self.type}
 
@@ -79,7 +77,6 @@ class Employees(db.Model):
     def __repr__(self):
         return '%r' % self.id
 
-    #TODO
     def to_dict(self):
         return {"id": self.id, "first_name": self.first_name, "last_name": self.last_name, "email": self.email, "hire_date": self.hire_date, "location": self.location, "contact_number": self.contact_number, "employee_type": self.employee_type}
 
@@ -92,7 +89,6 @@ class GeneralCategory(db.Model):
     def __repr__(self):
         return '%r' % self.id
 
-    #TODO
     def to_dict(self):
         return {"id": self.id, "category_type": self.category_type, "category_name": self.category_name}
 
@@ -105,6 +101,5 @@ class MovieDetails(db.Model):
     def __repr__(self):
         return '%r' % self.id
 
-    #TODO
     def to_dict(self):
         return {"id": self.id, "movie_id": self.movie_id, "person_id": self.person_id}

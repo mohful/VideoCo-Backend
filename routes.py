@@ -1,3 +1,4 @@
+from distutils.command.build_scripts import first_line_re
 from flask import Blueprint, Flask, jsonify, request, json, Response, session
 from sqlalchemy import select
 from models import Orders, Persons, Customer, Movies, MovieDetails, Employees, GeneralCategory, db
@@ -22,13 +23,27 @@ def orders():
             print(str(traceback.format_exc()), file=sys.stderr)
 
     elif(request.method == 'POST'):
-        return "post order"
+        request_data = request.get_json()
+        order = Orders(customer_id=request_data['customer_id'], date_of_order=request_data['date_of_order'])
+        db.session.add(order)
+        db.session.flush()
+        db.session.commit()
+        return Response(status=201)
 
     elif(request.method == 'PUT'):
-        return "put order"
+        request_data = request.get_json()
+        existing_order = db.session.query(Orders).where(Orders.order_id == request_data['order_id']).first().to_dict()
+        # change the variables of existing order, and then add, flush and commit
+        db.session.flush()
+        db.session.commit()
+        return Response(status=204)
 
     elif(request.method == 'DELETE'):
-        return "delete order"
+        order_to_delete = db.session.query(Orders).where(Orders.order_id == request_data['order_id']).first()
+        db.session.delete(order_to_delete)
+        db.session.flush()
+        db.session.commit()
+        return Response(status=202)
             
 @app.route('/customer/customer-api', methods=['GET', 'POST','PUT','DELETE'])
 def customer():
@@ -44,7 +59,7 @@ def customer():
 
 
     elif(request.method == 'POST'):
-        return "post customer"
+        return Response(status=201)
 
     elif(request.method == 'PUT'):
         return "put customer"
@@ -65,7 +80,7 @@ def movies():
             print(str(traceback.format_exc()), file=sys.stderr)
 
     elif(request.method == 'POST'):
-        return "post movies"
+        return Response(status=201)
 
     elif(request.method == 'PUT'):
         return "put movies"
@@ -86,7 +101,7 @@ def persons():
             print(str(traceback.format_exc()), file=sys.stderr)
 
     elif(request.method == 'POST'):
-        return "post persons"
+        return Response(status=201)
 
     elif(request.method == 'PUT'):
         return "put persons"
@@ -107,7 +122,7 @@ def employee():
             print(str(traceback.format_exc()), file=sys.stderr)
 
     elif(request.method == 'POST'):
-        return "post employee"
+        return Response(status=201)
 
     elif(request.method == 'PUT'):
         return "put employee"
@@ -128,7 +143,7 @@ def general():
             print(str(traceback.format_exc()), file=sys.stderr)
 
     elif(request.method == 'POST'):
-        return "post general"
+        return Response(status=201)
 
     elif(request.method == 'PUT'):
         return "put general"
@@ -149,7 +164,7 @@ def movie_details():
             print(str(traceback.format_exc()), file=sys.stderr)
 
     elif(request.method == 'POST'):
-        return "post movie details"
+        return Response(status=201)
 
     elif(request.method == 'PUT'):
         return "put movie details"
